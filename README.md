@@ -2,13 +2,13 @@
 
 > **Mã:** DE07 · **Độ khó:** 7/8 · **Vai trò:** 1 (khách hàng chuyển tiền) · **Nền tảng:** App ngân hàng iOS / Android
 
-Tính năng chuyển khoản bằng số tài khoản hoặc số thẻ trong app ngân hàng, theo đúng các bước người dùng làm: **chọn ngân hàng → nhập số tài khoản → chọn số tiền → xác thực và xác nhận chuyển khoản → hoàn thành chuyển khoản**. Đề khó hơn Đề 4 vì có nhiều ngân hàng nhận, tra tên liên ngân hàng, hai hình thức chuyển (nhanh 24/7 và thường), phí, hạn mức, cảnh báo lừa đảo và nhiều trạng thái kết quả (đã tiếp nhận, chưa xác định). Đề gồm **1 tính năng**, là **1 luồng** gồm 5 bước và các màn hình; tài liệu gồm 1 PRD và 1 SRS.
+Tính năng chuyển khoản bằng số tài khoản hoặc số thẻ trong app ngân hàng, theo đúng các bước người dùng làm: **chọn ngân hàng → nhập số tài khoản → chọn số tiền → xác nhận, xem lại và xác thực chuyển khoản → hoàn thành chuyển khoản**. Đề khó hơn Đề 4 vì có nhiều ngân hàng nhận, tra tên liên ngân hàng, hai hình thức chuyển (nhanh 24/7 và thường), phí, hạn mức, cảnh báo lừa đảo và nhiều trạng thái kết quả (đã tiếp nhận, chưa xác định). Đề gồm **1 tính năng**, là **1 luồng** gồm 5 bước và các màn hình; tài liệu gồm 1 PRD và 1 SRS.
 
 ## Tính năng
 
 | **Tính năng** | **Luồng** | **PRD** | **SRS** |
 | --- | --- | --- | --- |
-| Chuyển khoản qua app ngân hàng | Chọn ngân hàng → Nhập số tài khoản → Chọn số tiền → Xác thực & xác nhận chuyển khoản → Hoàn thành chuyển khoản | [PRD](docs/PRD.md) | [SRS](docs/SRS.md) |
+| Chuyển khoản qua app ngân hàng | Chọn ngân hàng → Nhập số tài khoản → Chọn số tiền → Xác nhận & xác thực chuyển khoản → Hoàn thành chuyển khoản | [PRD](docs/PRD.md) | [SRS](docs/SRS.md) |
 
 ## Các bước và màn hình của luồng
 
@@ -17,10 +17,10 @@ Tính năng chuyển khoản bằng số tài khoản hoặc số thẻ trong ap
 | Bước 1 | Chọn ngân hàng | SCR-01, SCR-02 | Màn chuyển tiền, đi tắt từ gần đây, danh bạ, tài khoản của tôi; danh sách ngân hàng, hay dùng, tìm, trạng thái bảo trì |
 | Bước 2 | Nhập số tài khoản | SCR-03 | Số tài khoản hoặc số thẻ, dán, tra tên chủ tài khoản, thẻ không khớp ngân hàng, cảnh báo tài khoản |
 | Bước 3 | Chọn số tiền | SCR-04 | Số tiền bằng chữ, nội dung, tài khoản nguồn, chuyển nhanh hoặc thường, phí, thời gian tới, hạn mức |
-| Bước 4 | Xác thực & xác nhận chuyển khoản | SCR-05, SCR-06 | Xem lại, xác nhận, cảnh báo lừa đảo và chuyển trùng, PIN / sinh trắc / khuôn mặt, gửi lệnh |
+| Bước 4 | Xác nhận & xác thực chuyển khoản | SCR-05, SCR-06 | Bấm Xác nhận, xem lại, cảnh báo lừa đảo và chuyển trùng, PIN / sinh trắc / khuôn mặt, gửi lệnh |
 | Bước 5 | Hoàn thành chuyển khoản | SCR-07, SCR-08 | Đang xử lý, thành công, đã tiếp nhận, thất bại, chưa xác định, huỷ lệnh chuyển thường, biên lai, lưu danh bạ, chi tiết |
 
-Luồng: Bước 1 Chọn ngân hàng → Bước 2 Nhập số tài khoản → Bước 3 Chọn số tiền → Bước 4 Xác thực & xác nhận chuyển khoản → Bước 5 Hoàn thành chuyển khoản.
+Luồng: Bước 1 Chọn ngân hàng → Bước 2 Nhập số tài khoản → Bước 3 Chọn số tiền → Bước 4 Xác nhận & xác thực chuyển khoản → Bước 5 Hoàn thành chuyển khoản.
 
 ## Luồng chuyển khoản
 
@@ -29,7 +29,7 @@ flowchart LR
   A["Trang chủ, Chuyển tiền"] --> B["Chọn ngân hàng, Bước 1"]
   B --> C["Nhập số tài khoản, tra tên, Bước 2"]
   C --> D["Chọn số tiền, Bước 3"]
-  D --> E["Xem lại, Xác nhận, Bước 4"]
+  D --> E["Bấm Xác nhận, xem lại giao dịch, Bước 4"]
   E --> F["Xác thực PIN, sinh trắc, khuôn mặt, Bước 4"]
   F --> G["Hoàn thành, Bước 5"]
   A -->|Gần đây, danh bạ| D
@@ -45,7 +45,7 @@ stateDiagram-v2
   NHAP --> NHAP : Chọn số tiền, Bước 3
   NHAP --> DA_BO : Thoát, dừng ở cảnh báo, Bước 3, Bước 4
   NHAP --> BI_TU_CHOI : Rủi ro bị chặn, Bước 4
-  NHAP --> CHO_XAC_THUC : Bấm Xác nhận, Bước 4
+  NHAP --> CHO_XAC_THUC : Bấm Chuyển tiền ở màn xem lại, Bước 4
   CHO_XAC_THUC --> DA_BO : Hết 3 phút
   CHO_XAC_THUC --> BI_TU_CHOI : Sai xác thực quá số lần
   CHO_XAC_THUC --> DANG_XU_LY : Xác thực, gửi lệnh nhanh hoặc nội bộ, Bước 4
@@ -73,7 +73,7 @@ flowchart LR
   S03 -->|Đổi ngân hàng| S02
   S03 --> S04["SCR-04 Chọn số tiền"]
   S01 -->|Gần đây, danh bạ| S04
-  S04 --> S05["SCR-05 Xác nhận giao dịch"]
+  S04 --> S05["SCR-05 Xem lại giao dịch"]
   S05 -->|Sửa| S04
   S05 --> S06["SCR-06 Xác thực"]
   S06 --> S07["SCR-07 Kết quả & biên lai"]
@@ -111,8 +111,8 @@ Ngoài phạm vi cả đề: mở tài khoản, đăng nhập và cài Smart OTP
 | SCR-02 | Chọn ngân hàng | Chọn ngân hàng | Bước 1 |
 | SCR-03 | Nhập số tài khoản | Nhập số tài khoản | Bước 2 |
 | SCR-04 | Chọn số tiền | Chọn số tiền | Bước 3 |
-| SCR-05 | Xác nhận giao dịch (gồm màn cảnh báo) | Xác thực & xác nhận | Bước 4 |
-| SCR-06 | Xác thực giao dịch | Xác thực & xác nhận | Bước 4 |
+| SCR-05 | Xem lại giao dịch (gồm màn cảnh báo) | Xác nhận & xác thực | Bước 4 |
+| SCR-06 | Xác thực giao dịch | Xác nhận & xác thực | Bước 4 |
 | SCR-07 | Kết quả & biên lai | Hoàn thành | Bước 5 |
 | SCR-08 | Chi tiết giao dịch | Hoàn thành | Bước 5 |
 

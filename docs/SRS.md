@@ -2,15 +2,15 @@
 
 # UC-DE07 - Chuyển khoản qua app ngân hàng
 
-> SRS này mô tả **1 tính năng**, là **1 luồng** gồm 5 bước: Chọn ngân hàng → Nhập số tài khoản → Chọn số tiền → Xác thực & xác nhận chuyển khoản → Hoàn thành chuyển khoản. Mã BR, MSG, UC, SCR đánh số liên tục trong toàn tài liệu. Sơ đồ chung xem [README](../README.md).
+> SRS này mô tả **1 tính năng**, là **1 luồng** gồm 5 bước: Chọn ngân hàng → Nhập số tài khoản → Chọn số tiền → Xác nhận & xác thực chuyển khoản → Hoàn thành chuyển khoản. Mã BR, MSG, UC, SCR đánh số liên tục trong toàn tài liệu. Sơ đồ chung xem [README](../README.md).
 
 ## 1. Tổng quan
 
 | **Mục** | **Nội dung** |
 | --- | --- |
-| Mục tiêu | Tính năng chuyển khoản bằng số tài khoản hoặc số thẻ trong app ngân hàng, theo đúng các bước người dùng làm: **chọn ngân hàng → nhập số tài khoản → chọn số tiền → xác thực và xác nhận chuyển khoản → hoàn thành chuyển khoản** |
+| Mục tiêu | Tính năng chuyển khoản bằng số tài khoản hoặc số thẻ trong app ngân hàng, theo đúng các bước người dùng làm: **chọn ngân hàng → nhập số tài khoản → chọn số tiền → xác nhận, xem lại và xác thực chuyển khoản → hoàn thành chuyển khoản** |
 | Actor | Khách hàng · App ngân hàng · Máy chủ ngân hàng · Napas (trạng thái ngân hàng) · Napas · Hệ thống chấm điểm rủi ro · Ngân hàng nhận |
-| Luồng | Bước 1 Chọn ngân hàng → Bước 2 Nhập số tài khoản → Bước 3 Chọn số tiền → Bước 4 Xác thực & xác nhận chuyển khoản → Bước 5 Hoàn thành chuyển khoản |
+| Luồng | Bước 1 Chọn ngân hàng → Bước 2 Nhập số tài khoản → Bước 3 Chọn số tiền → Bước 4 Xác nhận & xác thực chuyển khoản → Bước 5 Hoàn thành chuyển khoản |
 | Ngoài phạm vi | Mở tài khoản, đăng nhập và cài Smart OTP, đăng ký sinh trắc khuôn mặt (chỉ dẫn link), chuyển khoản QR (xem Đề 4), ví điện tử, số điện thoại, ngoại tệ và quốc tế, hẹn lịch và định kỳ, chuyển theo lô, lịch sử giao dịch đầy đủ, tra soát, quản lý danh bạ, đổi hạn mức |
 | Nền tảng | App ngân hàng iOS / Android |
 
@@ -21,7 +21,7 @@
 | Bước 1 · Chọn ngân hàng | Khách chọn đúng ngân hàng nhận thật nhanh, hoặc đi tắt tới người nhận quen | Màn bắt đầu chuyển tiền, Gần đây, Danh bạ, Tài khoản của tôi, danh sách ngân hàng, tìm ngân hàng, ngân hàng hay dùng, trạng thái bảo trì |
 | Bước 2 · Nhập số tài khoản | Khách nhập đúng số tài khoản, thấy tên chủ tài khoản thật trước khi chuyển | Nhập số tài khoản, số thẻ, dán, làm sạch, tra tên, kết quả tra tên, gợi ý từ danh bạ, cảnh báo tài khoản, chống dò |
 | Bước 3 · Chọn số tiền | Khách nhập đúng số tiền, nội dung, tài khoản nguồn; biết hình thức chuyển, phí và thời gian tiền tới | Số tiền, bằng chữ, gợi ý nhanh, nội dung, tài khoản nguồn, số dư, hạn mức, hình thức chuyển, phí, thời gian tới |
-| Bước 4 · Xác thực & xác nhận chuyển khoản | Khách hàng xem lại, xác nhận, xác thực đúng mức; dừng lại được khi có dấu hiệu lừa đảo | Màn xác nhận, cảnh báo lừa đảo, cảnh báo trùng, mức xác thực, PIN Smart OTP, sinh trắc thiết bị, sinh trắc khuôn mặt, khoá khi sai, gửi lệnh |
+| Bước 4 · Xác nhận & xác thực chuyển khoản | Khách hàng xem lại, xác nhận, xác thực đúng mức; dừng lại được khi có dấu hiệu lừa đảo | Màn xem lại, cảnh báo lừa đảo, cảnh báo trùng, mức xác thực, PIN Smart OTP, sinh trắc thiết bị, sinh trắc khuôn mặt, khoá khi sai, gửi lệnh |
 | Bước 5 · Hoàn thành chuyển khoản | Khách nhận kết quả rõ ràng, có biên lai, biết tiền đang ở đâu và nên làm gì | Đang xử lý, đã tiếp nhận, thành công, thất bại, chưa xác định, đối soát, hoàn tiền tự động, huỷ lệnh chuyển thường, push, biên lai, chia sẻ, lưu danh bạ, chi tiết giao dịch, chuyển lại |
 
 ## 2. User Story
@@ -82,17 +82,17 @@
 | BR-24 | **Hình thức chuyển**: cùng ngân hàng → "Trong ngân hàng", không có lựa chọn. Liên ngân hàng: **Chuyển nhanh 24/7** (Napas, số tiền < 500.000.000 ₫, mặc định) hoặc **Chuyển thường** (mọi số tiền; xử lý 08:00–16:00 ngày làm việc; lệnh ngoài khung xử lý từ 08:00 ngày làm việc kế tiếp). Số tiền ≥ 500.000.000 ₫ hoặc ngân hàng nhận `BAO_TRI_NHANH` (Bước 1 BR-06) → chỉ Chuyển thường, hiện MSG-16 với lý do |
 | BR-25 | **Phí** theo biểu phí cấu hình: trong ngân hàng 0 ₫; chuyển nhanh 0 ₫; chuyển thường 0,02% số tiền, tối thiểu 10.000 ₫, tối đa 500.000 ₫. Phí trừ thêm từ tài khoản nguồn; người nhận nhận đủ. Tổng trừ = số tiền + phí |
 | BR-26 | **Thời gian tới dự kiến**: trong ngân hàng, chuyển nhanh → "Ngay lập tức"; chuyển thường trong khung giờ → "Trong ngày làm việc hôm nay"; ngoài khung → "Từ 08:00 {thứ, ngày làm việc kế tiếp}" |
-| BR-27 | **Kiểm tra tức thì** (chờ 300 ms sau lần gõ cuối): số tiền < 1.000 → MSG-13; tổng trừ > số dư khả dụng → MSG-14; vượt hạn mức giao dịch hoặc hạn mức còn lại trong ngày → MSG-15. Có lỗi → nút "Tiếp tục" tắt |
-| BR-28 | **Rời màn**: quay lại → giữ người nhận, bỏ số tiền đã nhập; thoát chuyển tiền → bỏ lệnh nháp, không lưu. inquiry_id (Bước 2 BR-12) hết hạn khi bấm Tiếp tục → tra tên lại tự động; tên khác → MSG-17 |
-| BR-29 | **Màn xác nhận** (**SCR-05**) chỉ đọc, thứ tự: số tiền và bằng chữ; người nhận (tên chủ tài khoản, ngân hàng, số tài khoản đầy đủ); nội dung (bản sẽ gửi); hình thức chuyển và thời gian tới (Bước 3 BR-24, BR-26); tài khoản nguồn; phí; tổng trừ; cách xác thực. Nút "Sửa" về **SCR-04** giữ dữ liệu; nút chính "Xác nhận". Thứ tự luôn là Xác nhận rồi mới Xác thực |
+| BR-27 | **Kiểm tra tức thì** (chờ 300 ms sau lần gõ cuối): số tiền < 1.000 → MSG-13; tổng trừ > số dư khả dụng → MSG-14; vượt hạn mức giao dịch hoặc hạn mức còn lại trong ngày → MSG-15. Có lỗi → nút "Xác nhận" tắt |
+| BR-28 | **Rời màn**: quay lại → giữ người nhận, bỏ số tiền đã nhập; thoát chuyển tiền → bỏ lệnh nháp, không lưu. inquiry_id (Bước 2 BR-12) hết hạn khi bấm Xác nhận → tra tên lại tự động; tên khác → MSG-17 |
+| BR-29 | **Màn xem lại** (**SCR-05**) chỉ đọc, thứ tự: số tiền và bằng chữ; người nhận (tên chủ tài khoản, ngân hàng, số tài khoản đầy đủ); nội dung (bản sẽ gửi); hình thức chuyển và thời gian tới (Bước 3 BR-24, BR-26); tài khoản nguồn; phí; tổng trừ; cách xác thực. Nút "Sửa" về **SCR-04** giữ dữ liệu; nút chính "Chuyển tiền". Thứ tự luôn là: bấm "Xác nhận" ở màn chọn số tiền → xem lại trên màn này → bấm "Chuyển tiền" → xác thực |
 | BR-30 | **Chấm điểm rủi ro** khi mở **SCR-05** (\[TransferPrepare\]): đầu vào gồm cờ người nhận (Bước 2 BR-15), người nhận mới, số tiền so với thói quen 90 ngày, thiết bị mới trong 24 giờ, giờ 23:00–05:00. Kết quả `THAP`, `CANH_BAO`, `CHAN`. Quá 800 ms hoặc lỗi → coi là `CANH_BAO` mức nhẹ (chỉ banner, không màn toàn trang) |
 | BR-31 | **Theo kết quả**: `THAP` → bình thường. `CANH_BAO` (hoặc cờ người nhận) → trước **SCR-05** hiện màn cảnh báo toàn trang (MSG-21, thêm MSG-22 nếu đọc được đang có cuộc gọi thoại); "Tiếp tục" bật sau 5 giây và khi tích "Tôi hiểu rủi ro và tự chịu trách nhiệm"; nút chính "Dừng giao dịch". `CHAN` → giao dịch `BI_TU_CHOI`, MSG-23 |
-| BR-32 | **Cảnh báo trùng**: có giao dịch `THANH_CONG` hoặc `CHUA_XAC_DINH` cùng người nhận, cùng số tiền trong 5 phút → khi bấm "Xác nhận" hiện MSG-24 \[Vẫn chuyển\] \[Huỷ\] |
+| BR-32 | **Cảnh báo trùng**: có giao dịch `THANH_CONG` hoặc `CHUA_XAC_DINH` cùng người nhận, cùng số tiền trong 5 phút → khi bấm "Chuyển tiền" hiện MSG-24 \[Vẫn chuyển\] \[Huỷ\] |
 | BR-33 | **Mức xác thực**: `THUONG` = PIN Smart OTP 6 số, hoặc sinh trắc thiết bị (vân tay, Face ID) nếu khách đã bật. `KHUON_MAT` = sinh trắc khuôn mặt có kiểm tra người thật, đối chiếu dữ liệu đã đăng ký từ CCCD gắn chip; áp dụng khi số tiền > 10.000.000 ₫, hoặc tổng đã chuyển trong ngày + số tiền > 20.000.000 ₫, hoặc giao dịch chuyển tiền đầu tiên trên thiết bị mới. **SCR-05** ghi rõ cách xác thực trước khi bấm |
-| BR-34 | **Chưa đăng ký khuôn mặt** mà cần `KHUON_MAT` → **SCR-05** hiện MSG-25 thay nút Xác nhận bằng "Đăng ký ngay"; không cho chuyển |
-| BR-35 | **Sinh trắc thiết bị** (mức `THUONG`): bấm Xác nhận → hộp thoại sinh trắc của hệ điều hành ngay; huỷ hoặc thất bại theo hệ điều hành → chuyển sang nhập PIN trên **SCR-06** |
+| BR-34 | **Chưa đăng ký khuôn mặt** mà cần `KHUON_MAT` → **SCR-05** hiện MSG-25 thay nút Chuyển tiền bằng "Đăng ký ngay"; không cho chuyển |
+| BR-35 | **Sinh trắc thiết bị** (mức `THUONG`): bấm Chuyển tiền → hộp thoại sinh trắc của hệ điều hành ngay; huỷ hoặc thất bại theo hệ điều hành → chuyển sang nhập PIN trên **SCR-06** |
 | BR-36 | **PIN**: bàn phím số xáo vị trí; sai → MSG-26 với số lần còn lại; sai 5 lần liên tiếp → khoá Smart OTP (MSG-27), giao dịch `BI_TU_CHOI`. **Khuôn mặt**: thất bại → thử lại; 3 lần liên tiếp → tạm khoá xác thực khuôn mặt 15 phút (MSG-28), giao dịch `BI_TU_CHOI` |
-| BR-37 | **Thời gian**: **SCR-06** có hiệu lực 3 phút kể từ khi bấm Xác nhận; hết → giao dịch `DA_BO`, quay về **SCR-05** với MSG-29, bấm Xác nhận lại để bắt đầu lại |
+| BR-37 | **Thời gian**: **SCR-06** có hiệu lực 3 phút kể từ khi bấm Chuyển tiền; hết → giao dịch `DA_BO`, quay về **SCR-05** với MSG-29, bấm Chuyển tiền lại để bắt đầu lại |
 | BR-38 | **Gửi lệnh**: xác thực đúng → ký lệnh bằng Smart OTP, gọi \[TransferSubmit\] kèm idempotency key sinh khi mở **SCR-05**; bấm, gửi lại nhiều lần chỉ tạo 1 lệnh. Máy chủ kiểm tra lại số dư, hạn mức; lỗi → MSG-30 và quay về **SCR-04**. Gửi thành công → giao dịch `DANG_XU_LY` (trong ngân hàng, chuyển nhanh) hoặc `DA_TIEP_NHAN` (chuyển thường), mở **SCR-07** (Bước 5) |
 | BR-39 | **Đang xử lý** (**SCR-07**, trong ngân hàng và chuyển nhanh): vòng chờ, "Đang chuyển tiền…", tóm tắt người nhận, số tiền. 10 giây đầu không có nút thoát; sau đó hiện "Về trang chủ" (giao dịch vẫn xử lý, kết quả qua push). App gọi \[TransferStatus\] mỗi 2 giây |
 | BR-40 | **Kết quả trong 60 giây**: `THANH_CONG` (ngân hàng nhận ghi có) hoặc `THAT_BAI` (bị từ chối). Quá 60 giây → `CHUA_XAC_DINH` |
@@ -152,7 +152,7 @@ stateDiagram-v2
 
 ### 4.3 Bước 3 · Chọn số tiền
 
-#### Trạng thái nút Tiếp tục trên SCR-04
+#### Trạng thái nút Xác nhận trên SCR-04
 
 ```mermaid
 stateDiagram-v2
@@ -162,7 +162,7 @@ stateDiagram-v2
   HOP_LE --> KHONG_HOP_LE : Sửa số tiền, đổi nguồn, đổi hình thức
   KHONG_HOP_LE --> HOP_LE : Sửa
   HOP_LE --> CHUA_NHAP : Xoá hết
-  HOP_LE --> DANG_KIEM_TRA : Bấm Tiếp tục
+  HOP_LE --> DANG_KIEM_TRA : Bấm Xác nhận
   DANG_KIEM_TRA --> HOP_LE : Tên người nhận đổi, chờ xác nhận
   DANG_KIEM_TRA --> [*] : Sang SCR-05, Bước 4
 ```
@@ -175,7 +175,7 @@ stateDiagram-v2
 | Liên ngân hàng, < 500 triệu | Hai thẻ chọn: Chuyển nhanh (chọn sẵn), Chuyển thường; mỗi thẻ có phí, thời gian tới |
 | Liên ngân hàng, ≥ 500 triệu hoặc bảo trì | Chỉ thẻ Chuyển thường, MSG-16 |
 
-### 4.4 Bước 4 · Xác thực & xác nhận chuyển khoản
+### 4.4 Bước 4 · Xác nhận & xác thực chuyển khoản
 
 #### Giao dịch trong phạm vi Bước 4
 
@@ -185,7 +185,7 @@ stateDiagram-v2
   NHAP --> NHAP : Sửa, quay về Bước 3
   NHAP --> DA_BO : Dừng ở cảnh báo, huỷ ở cảnh báo trùng
   NHAP --> BI_TU_CHOI : Rủi ro CHAN
-  NHAP --> CHO_XAC_THUC : Bấm Xác nhận
+  NHAP --> CHO_XAC_THUC : Bấm Chuyển tiền
   CHO_XAC_THUC --> DA_BO : Hết 3 phút, đóng màn xác thực
   CHO_XAC_THUC --> BI_TU_CHOI : Sai PIN 5 lần, khuôn mặt thất bại 3 lần
   CHO_XAC_THUC --> DANG_XU_LY : Xác thực đúng, gửi lệnh nhanh, nội bộ
@@ -202,9 +202,9 @@ stateDiagram-v2
 
 | **Tình huống** | **Hiển thị** |
 | --- | --- |
-| Bình thường | "Xác nhận" (chính), "Sửa" (phụ) |
-| Cần khuôn mặt, đã đăng ký | "Xác nhận" + dòng "Giao dịch này cần xác thực khuôn mặt" |
-| Cần khuôn mặt, chưa đăng ký | "Đăng ký ngay" thay "Xác nhận", MSG-25 |
+| Bình thường | "Chuyển tiền" (chính), "Sửa" (phụ) |
+| Cần khuôn mặt, đã đăng ký | "Chuyển tiền" + dòng "Giao dịch này cần xác thực khuôn mặt" |
+| Cần khuôn mặt, chưa đăng ký | "Đăng ký ngay" thay "Chuyển tiền", MSG-25 |
 | Rủi ro lỗi, cảnh báo nhẹ | Banner vàng trên đầu màn |
 
 ### 4.5 Bước 5 · Hoàn thành chuyển khoản
@@ -391,7 +391,7 @@ flowchart TD
 | **Mục** | **Nội dung** |
 | --- | --- |
 | Tiền điều kiện | Có người nhận đã xác minh (Bước 2) hoặc tài khoản của tôi (Bước 1) |
-| Hậu điều kiện thành công | Lệnh nháp hợp lệ: số tiền, nội dung, nguồn, hình thức, phí; mở **SCR-05** (Bước 4) |
+| Hậu điều kiện thành công | Lệnh nháp hợp lệ: số tiền, nội dung, nguồn, hình thức, phí; mở **SCR-05** Xem lại giao dịch (Bước 4) |
 | Hậu điều kiện thất bại | Ở lại **SCR-04** với lỗi |
 
 ```mermaid
@@ -408,7 +408,7 @@ flowchart TD
   F --> J["Nội dung, nguồn"]
   H --> J
   I --> J
-  J --> K["Bấm Tiếp tục"]
+  J --> K["Bấm Xác nhận"]
   K --> L{"inquiry_id còn hạn?"}
   L -->|Hết hạn, tên đổi| L1["MSG-17"]
   L -->|OK| M["SCR-05, Bước 4"]
@@ -422,8 +422,8 @@ flowchart TD
 | 2 | Khách hàng | Gõ 12.500.000 |
 | 3 | App | Hiện "Mười hai triệu năm trăm nghìn đồng"; hợp lệ; liên ngân hàng → Chuyển nhanh chọn sẵn, "Ngay lập tức · Miễn phí" |
 | 4 | Khách hàng | Sửa nội dung "Tien nha T11 P302" |
-| 5 | Khách hàng | Bấm "Tiếp tục" |
-| 6 | App | inquiry_id còn hạn → mở **SCR-05** (Bước 4) |
+| 5 | Khách hàng | Bấm "Xác nhận" |
+| 6 | App | inquiry_id còn hạn → mở **SCR-05** Xem lại giao dịch (Bước 4) |
 
 **Luồng thay thế**
 
@@ -445,9 +445,9 @@ flowchart TD
 | E4 | Tên người nhận đổi khi tra lại | MSG-17 |
 | E5 | Không tải được số dư, phí | MSG-18; máy chủ kiểm tra lại ở Bước 4 |
 
-### Bước 4 · Xác thực & xác nhận chuyển khoản
+### Bước 4 · Xác nhận & xác thực chuyển khoản
 
-#### UC-05 Xem lại và xác nhận
+#### UC-05 Xem lại giao dịch
 
 | **Mục** | **Nội dung** |
 | --- | --- |
@@ -457,7 +457,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-  A["Tiếp tục ở SCR-04"] --> B["TransferPrepare, chấm điểm BR-30"]
+  A["Xác nhận ở SCR-04"] --> B["TransferPrepare, chấm điểm BR-30"]
   B -->|CHAN| B1["BI_TU_CHOI, MSG-23"]
   B -->|CANH_BAO, cờ người nhận| C["Màn cảnh báo MSG-21, chờ 5 giây"]
   C -->|Dừng| X["DA_BO, về trang chủ"]
@@ -465,7 +465,7 @@ flowchart TD
   B -->|THAP| D["SCR-05 xem lại BR-29"]
   D -->|Sửa| E["SCR-04"]
   D -->|Chưa đăng ký khuôn mặt| D1["MSG-25"]
-  D -->|Xác nhận| F{"Trùng BR-32?"}
+  D -->|Chuyển tiền| F{"Trùng BR-32?"}
   F -->|Có| G["MSG-24"]
   G -->|Huỷ| X
   G -->|Vẫn chuyển| H
@@ -478,7 +478,7 @@ flowchart TD
 | --- | --- | --- |
 | 1 | App | Gọi \[TransferPrepare\]; nhận transaction_id, mức xác thực, kết quả rủi ro `THAP` |
 | 2 | App | Hiện **SCR-05** theo BR-29 |
-| 3 | Khách hàng | Kiểm tra, bấm "Xác nhận" |
+| 3 | Khách hàng | Kiểm tra, bấm "Chuyển tiền" |
 | 4 | App | Không trùng; giao dịch `CHO_XAC_THUC`; sang UC-06 |
 
 **Luồng thay thế**
@@ -640,7 +640,7 @@ flowchart TD
 | Đi tắt từ **SCR-01** (Bước 1) | **SCR-04** | |
 | "Sửa" ở **SCR-05** (Bước 4) | **SCR-04** | Giữ dữ liệu |
 | "Chuyển lại", "Thử lại" (Bước 5) | **SCR-04** điền sẵn | Tra tên lại |
-| "Tiếp tục" ở **SCR-04** (Bước 3) | UC-05 | |
+| "Xác nhận" ở **SCR-04** (Bước 3) | UC-05 | |
 | Quay lại từ màn đăng ký khuôn mặt thành công | **SCR-05** | Giữ giao dịch nếu chưa quá 10 phút |
 | Gửi lệnh ở Bước 4 | **SCR-07** | |
 | Push kết quả | **SCR-08** | |
@@ -698,10 +698,10 @@ flowchart TD
 | 8 | Hình thức chuyển | Radio card | Có (liên ngân hàng) | Mục 4.2; mỗi thẻ có phí, thời gian tới |
 | 9 | Tổng trừ | Text | – | Số tiền + phí |
 | 10 | Bàn phím số | Keypad | – | Ẩn khi đang sửa nội dung |
-| 11 | "Tiếp tục" | Button | – | Mục 4.1 |
+| 11 | "Xác nhận" | Button | – | Mục 4.1 |
 
-<!-- Bước 4 · Xác thực & xác nhận chuyển khoản -->
-### SCR-05 Xác nhận giao dịch (gồm màn cảnh báo)
+<!-- Bước 4 · Xác nhận & xác thực chuyển khoản -->
+### SCR-05 Xem lại giao dịch (gồm màn cảnh báo)
 
 | **#** | **Thành phần** | **Loại** | **Hành vi** |
 | --- | --- | --- | --- |
@@ -713,7 +713,7 @@ flowchart TD
 | 6 | Phí, tổng trừ | Text | |
 | 7 | Cách xác thực | Info | BR-33; MSG-25 khi chưa đăng ký |
 | 8 | Banner cảnh báo nhẹ | Banner | BR-30 khi chấm điểm lỗi |
-| 9 | "Sửa", "Xác nhận" | Button | Mục 4.2; "Xác nhận" dính đáy |
+| 9 | "Sửa", "Chuyển tiền" | Button | Mục 4.2; "Chuyển tiền" dính đáy |
 | 10 | Màn cảnh báo | Full screen | Biểu tượng cảnh báo, MSG-21, MSG-22; nút chính "Dừng giao dịch"; ô tích; "Tiếp tục" bật sau 5 giây; số tổng đài khẩn |
 
 ### SCR-06 Xác thực giao dịch
@@ -844,7 +844,7 @@ sequenceDiagram
   App->>API: TransferOptions
   API-->>App: Chỉ chuyển thường, phí 120.000 ₫, từ 08:00 thứ Hai
   App->>K: MSG-16, phí, thời gian tới
-  K->>App: Tiếp tục
+  K->>App: Xác nhận
   App->>K: SCR-05 Xác nhận giao dịch
 ```
 
@@ -861,7 +861,7 @@ sequenceDiagram
 | Mất mạng | MSG-19 |
 | Không có tài khoản nguồn | MSG-20 |
 
-### 8.4 Bước 4 · Xác thực & xác nhận chuyển khoản
+### 8.4 Bước 4 · Xác nhận & xác thực chuyển khoản
 
 | **API** | **Request chính** | **Response chính** | **Timeout / retry** |
 | --- | --- | --- | --- |
@@ -880,7 +880,7 @@ sequenceDiagram
   R-->>API: THAP
   API-->>App: auth THUONG, transaction_id
   App->>N: SCR-05 xem lại
-  N->>App: Xác nhận
+  N->>App: Chuyển tiền
   App->>N: Face ID
   N->>App: Đúng
   App->>API: TransferSubmit chữ ký, idempotency_key
@@ -975,7 +975,7 @@ sequenceDiagram
 | MSG-26 | Inline **SCR-06** | Mã PIN chưa đúng. Bạn còn {n} lần thử |
 | MSG-27 | Popup | Smart OTP đã bị khoá do nhập sai 5 lần. \[Mở khoá Smart OTP\] |
 | MSG-28 | Popup | Xác thực khuôn mặt chưa thành công. Vui lòng thử lại sau 15 phút, ở nơi đủ sáng |
-| MSG-29 | Toast | Phiên xác thực đã hết hạn. Bấm Xác nhận để thử lại |
+| MSG-29 | Toast | Phiên xác thực đã hết hạn. Bấm Chuyển tiền để thử lại |
 | MSG-30 | Popup | {Số dư hoặc hạn mức vừa thay đổi, vui lòng kiểm tra lại số tiền / Kết nối không ổn định, vui lòng thử lại} |
 | MSG-31 | **SCR-07** | Chuyển tiền thành công |
 | MSG-32 | **SCR-07** | Giao dịch không thành công: {Tài khoản nhận không nhận được tiền lúc này / Ngân hàng nhận đang bảo trì / Giao dịch bị từ chối}. Tiền {chưa bị trừ / đã được hoàn về tài khoản của bạn} |
@@ -993,7 +993,7 @@ sequenceDiagram
 | --- | --- |
 | Hiệu năng | **SCR-01**, **SCR-02** hiện ≤ 500 ms (dữ liệu cache, làm mới nền); lọc tìm kiếm ≤ 100 ms; \[RecipientInquiry\] ≤ 2 giây (p95); kiểm tra định dạng ≤ 50 ms; **SCR-04** hiện ≤ 500 ms; bằng chữ, kiểm tra cập nhật ≤ 100 ms; \[TransferOptions\] ≤ 500 ms; \[TransferPrepare\] gồm chấm điểm ≤ 1 giây (p95); \[TransferSubmit\] phản hồi nhận lệnh ≤ 2 giây (p95); 95% chuyển nhanh có kết quả ≤ 10 giây; push kết quả cuối ≤ 1 phút sau khi có kết quả |
 | Riêng tư | Danh bạ mã hoá khi lưu trên máy; số tài khoản chỉ hiện 4 số cuối trong danh sách |
-| Log / audit | Ngân hàng được chọn, cách chọn (hay dùng, tìm, cuộn); Mỗi lần tra tên: ngân hàng, kết quả, risk_flag (không log số đầy đủ); Số tiền, nguồn, hình thức, phí khi bấm Tiếp tục; Kết quả rủi ro, cảnh báo đã hiện và lựa chọn của khách, mức xác thực, kết quả từng lần xác thực; Thời điểm từng trạng thái, mã lý do, lệnh hoàn tiền, huỷ lệnh |
+| Log / audit | Ngân hàng được chọn, cách chọn (hay dùng, tìm, cuộn); Mỗi lần tra tên: ngân hàng, kết quả, risk_flag (không log số đầy đủ); Số tiền, nguồn, hình thức, phí khi bấm Xác nhận; Kết quả rủi ro, cảnh báo đã hiện và lựa chọn của khách, mức xác thực, kết quả từng lần xác thực; Thời điểm từng trạng thái, mã lý do, lệnh hoàn tiền, huỷ lệnh |
 | Tracking | Nguồn bắt đầu (mới, gần đây, danh bạ, của tôi), thời gian chọn ngân hàng, từ khoá tìm 0 kết quả, chọn ngân hàng bảo trì; Dán hay gõ, số lần tra, kết quả, đổi ngân hàng, gặp cảnh báo, thời gian tới có tên; Thời gian ở **SCR-04**, gợi ý nhanh, đổi hình thức, đổi nguồn, lỗi gặp phải, bỏ giữa chừng; Thời gian ở **SCR-05**, bấm Sửa, gặp cảnh báo (loại, lựa chọn), loại xác thực, thất bại, bỏ dở; Phân bố kết quả, thời gian tới kết quả, thoát khi đang xử lý, chia sẻ, lưu danh bạ, huỷ lệnh, thử lại, chuyển lại |
 | Accessibility | Logo kèm tên dạng chữ; danh sách A–Z có chỉ mục; nhãn trạng thái đọc được bằng giọng đọc; Tên người nhận được đọc ngay khi có; số tài khoản đọc theo nhóm; lỗi được đọc khi xuất hiện; Số tiền đọc kèm bằng chữ; thẻ hình thức đọc rõ phí và thời gian tới; **SCR-05** đọc tuần tự theo thứ tự quan trọng; nút "Dừng giao dịch" là trọng tâm mặc định ở màn cảnh báo; hướng dẫn khuôn mặt có lời đọc; Kết quả thông báo bằng giọng đọc; trạng thái phân biệt bằng biểu tượng và chữ, không chỉ màu |
 | Bảo mật, riêng tư | Bộ nhớ tạm chỉ đọc khi được phép; chống dò theo BR-16 |
