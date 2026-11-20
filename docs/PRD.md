@@ -595,8 +595,6 @@ AC04: Chi tiết giao dịch có "Chuyển lại" (người nhận, số tiền,
 
 ## 10. Câu hỏi mở
 
-> Mọi câu hỏi dưới đây đã được PO chốt ngày 20/11/2026; quyết định ghi sau mỗi câu và đã cập nhật vào SRS.
-
 - Có cho nhập số tài khoản trước rồi chọn ngân hàng sau? → **Đã chốt:** Không; luồng chuẩn là chọn ngân hàng trước (SRS BR-03).
 - Người nhận từ danh bạ có cần tra tên lại? → **Đã chốt:** Có, mỗi lần chuyển (SRS BR-07).
 - Ngân hàng của mình xếp ở đâu? → **Đã chốt:** Ghim trên cùng, trên 5 ngân hàng hay dùng (SRS BR-04).
